@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The DOM</title>
+</head>
+<body>
+    <h1 class="title">This is a header</h1>
+    <p class="id">This is a paragraph</p>
+    <p class="id2">This is a paragraph</p>
+    <p class="id3">This is a paragraph</p>
+    <ul class="list">
+        <li>red</li>
+        <li>red</li>
+        <li>red</li>
+    </ul>
+
+    <button id="btn1">Button1</button>
+    <button id="btn2">Button2</button>
+    <script>
+        console.log(window);
+        let p = document.createElement("p");
+        let textNode = document.createTextNode("The Goat");
+        p.appendChild(textNode);
+        document.body.appendChild(p);
+        let p2 = document.getElementsByClassName("list")
+        //document.body.removeChild(p2); works for removing li from a ul
+
+        Element.prototype.remove = function(){ //didn't work, dunno Y?
+            let parent = this.parentElement;
+            parent.removeChild(this);
+        }
+        //p2.remove();
+
+        // let p1 = document.querySelector(".id").style.backgroundColor;
+        //p1.style.backgroundColor = "pink";
+        document.querySelector(".id").style.backgroundColor = "blue"; //testing method chaining here
+
+        let f2 = function () {
+            console.log("clicked");
+        }
+        // button.addEventListener("click",f2);  //Show how to add and remove event listener here
+        // button.removeEventListener("click",f2);
+        // b2.ondblclick = function (params) {
+        //     console.log("On DBL Click");
+        // }
+        let title = document.querySelector(".title");
+        title.addEventListener("click", function(){
+            this.style.position = "fixed";
+            let x = 0;
+            let a = setInterval(() => {
+                x++;
+                title.style.top = 100 + 100 * Math.sin(x/100) + "px";
+                title.style.left = 100 + 100 * Math.sin(4 * x/100) + "px";
+            }, 100);
+        });
+
+        addEventListener("keydown", fkeydown);  //Event listener for keydown(keypress)
+        function fkeydown(event){
+            console.log(event);
+            // Properties from the keyboard event object
+            // console.log(event.keyCode);
+            // console.log(event.ctrlKey);
+            // console.log(event.key);
+            // console.log(String.fromCharCode(event.keyCode));
+            document.body.style.background = "lightgreen";
+        }
+
+        addEventListener("keyup", fkeyup);  //Event listener for keydown(keypress)
+        function fkeyup(event) {
+            document.body.style.background = "";
+        }
+
+
+        let button1 = document.getElementById("btn1");
+        let button2 = document.getElementById("btn2");
+
+        button1.addEventListener("mousedown", fmousedown);
+        function fmousedown(event) {
+            console.log(event);
+        }
+
+        button2.addEventListener("focus", ffocus);
+        function ffocus(event) {
+            console.log(event);
+        }
+
+        //Mouse move event listener
+        addEventListener("mousemove", fmousemove);
+        function fmousemove(event){
+            //console.log(event);
+        }
+
+        //JS is single threaded cos it excecutes 1 statement at a time
+        // JS Debouncing
+
+        //JS bubling - Event is first handled and captured by the innermost element then propagated to outer
+        //addEventListener("click", fkeypress, true) //JS Capturing, with the true param, Event prop will first start from here
+        
+
+        //JS event delegation - Can fix element not working for added elements
+        //JS Execution context Creation & Hoisting - Js stores all functions fully so they can be called from anywhere
+        // In the script. Variables are hoisted as undefined values if called before their declaration
+        // A view of all detailed EC creation and hoisting to give an idea of how JS runs your code is known as 
+        // an execution stack
+
+
+        // Understand scope chain
+
+        // JS Closures
+        // A closure is a feature in JavaScript where an inner function has access to the outer (enclosing) function's variables
+        let cars = [];
+        for (let i = 0; i < 3; i++) {
+            cars.push(()=>{
+                console.log(i)
+            })
+        }
+        cars[2]();
+
+
+        function addOne(){
+            let x = 1;
+            return function (y) {
+                return x + y;
+            } 
+        }
+
+        var num = addOne();
+        console.log(addOne()(3));
+        console.log(num(3));
+
+
+        let f = run([4,8,1,3]);
+        function run(array){
+
+        }
+
+        // Using an Obj container of related properties is a singleton pattern
+    </script>
+</body>
+</html>
+
